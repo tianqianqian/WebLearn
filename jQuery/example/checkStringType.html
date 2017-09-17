@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>检测输入的字符串类型</title>
+	<style type="text/css">
+
+		.divTip{
+			width: 210px;
+			height: 200px;
+			border: solid 1px #eee;
+		}
+	</style>
+</head>
+<body>
+<input type="text" placeholder="请输入字符串..." id="str">
+<select id="selectType">
+	<option value="email">邮箱</option>
+	<option value="telephone">电话号码</option>
+	<option value="mobile">手机号码</option>
+	<option value="postcode">邮政编码</option>
+	<option value="number">整数</option>
+	<option value="zh_cn">汉字</option>
+	<option value="url">网址</option>
+	<option value="odd">奇数</option>
+	<option value="even">偶数</option>
+</select>
+<input type="button" id="btnChkStr" value="检测" class="btn">
+<div id="divTip">
+
+</div> 
+
+<script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+	$("#btnChkStr").click(function() {
+		// 获取字符和类型
+		var str = $("#str").val();
+		var type = $("#selectType").val();
+		// 检测字符串
+		var showStr = "";
+		var isResultType = checkStrType(str, type);
+		var TempStr = isResultType ? "是" : "不是";
+		showStr =  str + TempStr + type;
+		$("#divTip").html(showStr);
+
+});
+		var arrRegExp = {
+			"email" : "\\w+(-+.)\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.\\w+])*",
+			"telephone": "(\\(\\d{3, 4}\\) || \\d{3,4}-|\\s)?\\d{7, 8}",
+			"mobile": "(86)*0*1[3,5]\\d{9}",
+			"postcode": "^\\d{6}",
+			"number": "^-?[0-9]\\d*s",
+			"zh_cn": "[\\u4e00-\\u9fa5]",
+			"url" : '[a-zA-z] + ://[^\\s]*'
+		}
+		function checkStrType(str, type)
+		{
+			var result = false;
+			switch(type){
+				case 'odd':
+				var chkStr = arrRegExp['number'];
+				var reg = new RegExp(chkStr, 'g');
+				if (reg.test(str)){
+					// is number
+					if (parseInt(str) % 2 == 1){
+						result = true;
+					}
+					else{
+						result = false;
+					}
+				}
+				break;
+				case 'even':
+				var chkStr = arrRegExp['number'];
+				var reg = new RegExp(chkStr, 'g');
+				if (reg.test(str)){
+					// is number
+					if (parseInt(str) % 2 == 0){
+						result = true;
+					}
+					else{
+						result = false;
+					}
+				}
+				break;
+				default: // 其他类型需按照正则来匹配
+				var chkstr = arrRegExp[type];
+				var reg = new RegExp(chkstr, 'g');
+				var result = reg.test(str);
+				break;
+			}
+			return result;
+		}
+</script>
+</body>
+</html>

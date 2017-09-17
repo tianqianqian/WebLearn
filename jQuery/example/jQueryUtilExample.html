@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>jQuery工具函数的应用</title>
+</head>
+<body>
+<h1>遍历数组与对象</h1>
+	<h2>数组</h2>
+	<div class="arrId">
+	<h2>对象</h2>
+	<div class="obj"></div>
+	<script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript">
+		
+		// 数据变更 map 按照指定条件修改数组中的所选元素
+		$(function(){
+			var strTmp = "变更前数据:";
+			var arrNum = [2, 8, 3, 7, 4, 9, 3, 10, 9, 7, 21];
+			var arrFilter = $.map(arrNum, function(ele, index){
+				if (ele > 5 && index < 8)
+				{
+					return ele + 1;
+				}
+			})
+			strTmp += arrNum.join();
+			strTmp += "<br/><br>变更后的数据：";
+			strTmp += arrFilter.join();
+			console.log(strTmp);
+
+			// $.grep与$.map大致都是过滤数据，但是前者不能修改元素
+		});
+
+		// $.inArray(index, arr); 搜索在index位置的字符
+		// 这里是以单个元素来搜索的，类似于String一样，而不是取数组下标得元素
+		$(function(){
+			var arr = [4,21,2,5];
+			console.log("$.inArray(2, [4,21,2,5]) :" + $.inArray(2, arr));
+		});
+
+		// 字符串操作
+		$(function(){
+			// 去除字符两边的字符串
+			var strRrim = "    adc     ";
+			console.log(strRrim);
+			console.log("去除字符两边的空字符串:" + $.trim(strRrim));
+		})
+
+		// 扩展工具函数
+
+		/**
+		*	返回两个数中最大值
+		*
+		*	@param p1 数字
+		*	@param p2 数字
+		*	@return 最大值的一个数
+		*/
+		(function($){
+			$.extend("MaxNum", function(p1, p2){
+				return p1 > p2 ? p1 : p2;
+			});
+			
+		})(jQuery);
+
+		/**
+		*	返回两个数中最小小值
+		*
+		*	@param p1 数字
+		*	@param p2 数字
+		*	@return 最值的一个数
+		*/
+		(function($){
+			$.extend("MinNum", function(p1, p2){
+				return p1 < p2 ? p1 : p2;
+			});
+			
+		})(jQuery);
+		$(function(){
+			console.log("2, 8最大值是:" + $.MaxNum(2, 8));
+		})
+	</script>
+</body>
+</html>

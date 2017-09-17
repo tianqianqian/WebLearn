@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>data属性缓存数据</title>
+</head>
+<body>
+<p><b>数据状态</b></p>
+<script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		// 缓存数据
+		$("p").data("tempData", {
+			name: "李建洲",
+			sex: "女",
+			score: "80"
+		});
+	})();
+
+	$(function(){
+		// 显示设置的数据
+
+	})
+</script>
+</body>
+</html>
